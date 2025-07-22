@@ -6,7 +6,7 @@
 /*   By: jgomez-d <jgomez-d@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 14:47:56 by jgomez-d          #+#    #+#             */
-/*   Updated: 2025/06/07 21:18:58 by jgomez-d         ###   ########.fr       */
+/*   Updated: 2025/07/22 16:04:39 by jgomez-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@
  #define CYAN		"\x1b[36m"
  #define WHITE		"\x1b[37m"
 
+ // THREAD STATES
+
  typedef enum e_opcode
  {
 	LOCK,
@@ -44,14 +46,23 @@
 	JOIN,
 	DETACH,
  } t_opcode;
+
+ // TIME STATES 
+
+ typedef enum e_time_code
+ {
+	SECOND,
+	MILISECOND,
+	MICROSECOND,
+ } t_time_code;
  
- // PREDECLARATION OF THE TABLE FOR RECURSION
+ // PREDECLARATIONS OF TABLE AND MUTEX FOR RECURSION
  
  typedef struct s_table t_table;
  
- // FORKS
-
  typedef pthread_mutex_t t_mtx;
+ 
+ // FORKS
 
  typedef struct s_fork
  {
@@ -84,13 +95,18 @@
 	long	limit_meals;
 	long	start_simulation;
 	bool	end_simulation;
+	bool	all_threads_ready;
+	t_mtx	table_mutex;
 	t_fork	*forks;
 	t_philo	*philos;
  };
 
- // EXIT
-
+ // UTILS
+ 
+ long	get_time(t_time_code timecode);
  void	error_exit(const char *error);
+ void	precise_usleep(t_table *table, long usec);
+
 
  // PARSING
 
@@ -100,11 +116,23 @@
  
  void	data_init(t_table *table);
 
- // UTILS
+ // HANDLERS
  
  void	*ft_safe_malloc(size_t bytes);
  void	safe_mutex_handle(t_mtx *mutex, t_opcode opcode);
  void	safe_thread_handle(pthread_t *thread, void *(*foo)(void *), 
 			void *data,t_opcode opcode);
+			
+ // GETTERS AND SETTERS
+
+ void	set_bool(t_mtx *mtx, bool *dest, bool value);
+ bool	get_bool(t_mtx *mtx, bool *value);
+ void	set_long(t_mtx *mtx, long *dest, long value);
+ long	get_long(t_mtx *mtx, long *value);
+ inline	bool simulation_finished(t_table *table);
+
+ // SYNC UTILS
+
+ void	wait_all_threads(t_table *table); 
 
 #endif

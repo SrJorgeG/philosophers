@@ -1,25 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   sync_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jgomez-d <jgomez-d@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/07 15:11:54 by jgomez-d          #+#    #+#             */
-/*   Updated: 2025/07/22 13:22:57 by jgomez-d         ###   ########.fr       */
+/*   Created: 2025/07/22 14:45:01 by jgomez-d          #+#    #+#             */
+/*   Updated: 2025/07/22 14:48:27 by jgomez-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-int main(int ac, char *av[])
+void	wait_all_threads(t_table *table)
 {
-	t_table	table;
-	if (ac != 5 && ac != 6)
-		error_exit(RED"WRONG INPUT:\n\t"RESET
-					GREEN"Usage: ./philo 5 800 200 200 [5]"RESET);
-	parsing(&table, av);
-	data_init(&table);
-	dinner(&table);//TODO
-	clean(&table);//TODO
+	while (!get_bool(&table->table_mutex, table->all_threads_ready))
+		;
 }
