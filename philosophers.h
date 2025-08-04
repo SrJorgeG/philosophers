@@ -6,7 +6,7 @@
 /*   By: jgomez-d <jgomez-d@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 14:47:56 by jgomez-d          #+#    #+#             */
-/*   Updated: 2025/07/22 16:04:39 by jgomez-d         ###   ########.fr       */
+/*   Updated: 2025/08/05 01:10:46 by jgomez-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,10 @@
  #define CYAN		"\x1b[36m"
  #define WHITE		"\x1b[37m"
 
+ // DEBUG MODE
+
+ #define DEBUG_MODE 0
+ 
  // THREAD STATES
 
  typedef enum e_opcode
@@ -72,6 +76,16 @@
 
  // PHILO
 
+ typedef enum e_philo_status
+ {
+	EATING,
+	SLEEPING,
+	THINKING,
+	TAKE_FIRST_FORK,
+	TAKE_SECOND_FORK,
+	DIED,
+ } t_philo_status;
+ 
  typedef struct s_philo
  {
 	int			id;
@@ -80,6 +94,7 @@
 	long		last_meal_time; // TIME PASSED FROM LAST MEAL 
 	t_fork		*first_fork;
 	t_fork		*second_fork;
+	t_mtx		philo_mutex;
 	pthread_t	thread_id;
 	t_table		*table;
  } t_philo;
@@ -97,6 +112,7 @@
 	bool	end_simulation;
 	bool	all_threads_ready;
 	t_mtx	table_mutex;
+	t_mtx	write_mutex;
 	t_fork	*forks;
 	t_philo	*philos;
  };
@@ -123,6 +139,10 @@
  void	safe_thread_handle(pthread_t *thread, void *(*foo)(void *), 
 			void *data,t_opcode opcode);
 			
+ // SYNC UTILS
+
+ void	wait_all_threads(t_table *table); 
+
  // GETTERS AND SETTERS
 
  void	set_bool(t_mtx *mtx, bool *dest, bool value);
@@ -131,8 +151,10 @@
  long	get_long(t_mtx *mtx, long *value);
  inline	bool simulation_finished(t_table *table);
 
- // SYNC UTILS
+ // WRITING
 
- void	wait_all_threads(t_table *table); 
+ void	write_status(t_philo_status status, t_philo *philo, bool debug);
+ 
+
 
 #endif
