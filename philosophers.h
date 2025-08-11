@@ -6,7 +6,7 @@
 /*   By: jgomez-d <jgomez-d@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 14:47:56 by jgomez-d          #+#    #+#             */
-/*   Updated: 2025/08/05 01:10:46 by jgomez-d         ###   ########.fr       */
+/*   Updated: 2025/08/11 18:19:11 by jgomez-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,8 @@
 	long	start_simulation;
 	bool	end_simulation;
 	bool	all_threads_ready;
+	long	threads_running_nbr;
+	pthread_t	monitor;
 	t_mtx	table_mutex;
 	t_mtx	write_mutex;
 	t_fork	*forks;
@@ -122,7 +124,7 @@
  long	get_time(t_time_code timecode);
  void	error_exit(const char *error);
  void	precise_usleep(t_table *table, long usec);
-
+ void	clean(t_table *table);
 
  // PARSING
 
@@ -142,7 +144,9 @@
  // SYNC UTILS
 
  void	wait_all_threads(t_table *table); 
-
+ bool	all_threads_running(t_mtx *mutex, long *threads, long philo_nbr);
+ void	increase_long(t_mtx *mutex, long *value);
+ 
  // GETTERS AND SETTERS
 
  void	set_bool(t_mtx *mtx, bool *dest, bool value);
@@ -155,6 +159,14 @@
 
  void	write_status(t_philo_status status, t_philo *philo, bool debug);
  
+ // MONITOR
 
+ void	*monitor_dinner(void *data);
 
+ // DINNER
+
+ void	*dinner_simulation(void *data);
+ void	dinner_start(t_table *table);
+ void	*lone_philo(void *arg);
+ 
 #endif

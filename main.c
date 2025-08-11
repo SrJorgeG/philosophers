@@ -6,7 +6,7 @@
 /*   By: jgomez-d <jgomez-d@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 15:11:54 by jgomez-d          #+#    #+#             */
-/*   Updated: 2025/07/22 13:22:57 by jgomez-d         ###   ########.fr       */
+/*   Updated: 2025/08/11 18:10:23 by jgomez-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,6 @@ int main(int ac, char *av[])
 					GREEN"Usage: ./philo 5 800 200 200 [5]"RESET);
 	parsing(&table, av);
 	data_init(&table);
-	dinner(&table);//TODO
-	clean(&table);//TODO
+	dinner(&table);
+	clean(&table);
 }

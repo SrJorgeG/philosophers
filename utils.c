@@ -6,7 +6,7 @@
 /*   By: jgomez-d <jgomez-d@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 15:17:38 by jgomez-d          #+#    #+#             */
-/*   Updated: 2025/07/22 15:46:33 by jgomez-d         ###   ########.fr       */
+/*   Updated: 2025/08/11 17:40:01 by jgomez-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,23 @@ void	precise_usleep(t_table *table, long usec)
 			while (get_time(MICROSECOND) - start < usec)
 				;			
 	}
-	
+}
+
+void	clean(t_table *table)
+{
+	t_philo *philo;
+	int		i;
+
+	i = -1;
+	while (++i < table->philo_num)
+	{
+		philo = table->philos + i;
+		safe_mutex_handle(&philo->philo_mutex, DESTROY);
+	}
+	safe_mutex_handle(&table->write_mutex, DESTROY);
+	safe_mutex_handle(&table->table_mutex, DESTROY);
+	free(&table->forks);
+	free(&table->philos);
 }
 
 void	error_exit(const char *error)
