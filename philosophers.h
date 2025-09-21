@@ -6,7 +6,7 @@
 /*   By: jgomez-d <jgomez-d@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 14:47:56 by jgomez-d          #+#    #+#             */
-/*   Updated: 2025/08/11 18:19:11 by jgomez-d         ###   ########.fr       */
+/*   Updated: 2025/09/13 21:41:19 by jgomez-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,52 +121,52 @@
 
  // UTILS
  
- long	get_time(t_time_code timecode);
- void	error_exit(const char *error);
- void	precise_usleep(t_table *table, long usec);
- void	clean(t_table *table);
+ long			get_time(t_time_code timecode);
+ void			error_exit(const char *error);
+ void			precise_usleep(t_table *table, long usec);
+ void			clean(t_table *table);
 
  // PARSING
 
- void	parse_input(t_table *table, char **av);
+ void			parse_input(t_table *table, char **av);
 
  // INIT
  
- void	data_init(t_table *table);
+ void			data_init(t_table *table);
 
  // HANDLERS
  
- void	*ft_safe_malloc(size_t bytes);
- void	safe_mutex_handle(t_mtx *mutex, t_opcode opcode);
- void	safe_thread_handle(pthread_t *thread, void *(*foo)(void *), 
+ void			*ft_safe_malloc(size_t bytes);
+ void			safe_mutex_handle(t_mtx *mutex, t_opcode opcode);
+ void			safe_thread_handle(pthread_t *thread, void *(*foo)(void *), 
 			void *data,t_opcode opcode);
 			
  // SYNC UTILS
-
- void	wait_all_threads(t_table *table); 
- bool	all_threads_running(t_mtx *mutex, long *threads, long philo_nbr);
- void	increase_long(t_mtx *mutex, long *value);
+ 
+ void			wait_all_threads(t_table *table); 
+ bool			all_threads_running(t_mtx *mutex, long *threads, long philo_nbr);
+ void			increase_long(t_mtx *mutex, long *value);
  
  // GETTERS AND SETTERS
 
- void	set_bool(t_mtx *mtx, bool *dest, bool value);
- bool	get_bool(t_mtx *mtx, bool *value);
- void	set_long(t_mtx *mtx, long *dest, long value);
- long	get_long(t_mtx *mtx, long *value);
- inline	bool simulation_finished(t_table *table);
+ void			set_bool(t_mtx *mtx, bool *dest, bool value);
+ bool			get_bool(t_mtx *mtx, bool *value);
+ void			set_long(t_mtx *mtx, long *dest, long value);
+ long			get_long(t_mtx *mtx, long *value);
+ bool	simulation_finished(t_table *table);
 
  // WRITING
 
- void	write_status(t_philo_status status, t_philo *philo, bool debug);
+ void			write_status(t_philo_status status, t_philo *philo, bool debug);
  
  // MONITOR
 
- void	*monitor_dinner(void *data);
+ void			*monitor_dinner(void *data);
 
  // DINNER
 
- void	*dinner_simulation(void *data);
- void	dinner_start(t_table *table);
- void	*lone_philo(void *arg);
+ void			*dinner_simulation(void *data);
+ void			dinner_start(t_table *table);
+ void			*lone_philo(void *arg);
  
 #endif

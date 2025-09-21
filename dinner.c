@@ -6,7 +6,7 @@
 /*   By: jgomez-d <jgomez-d@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 13:19:42 by jgomez-d          #+#    #+#             */
-/*   Updated: 2025/08/11 18:07:47 by jgomez-d         ###   ########.fr       */
+/*   Updated: 2025/09/13 21:36:27 by jgomez-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	*dinner_simulation(void *data)
 	increase_long(&philo->table->table_mutex, &philo->table->threads_running_nbr);
 	while (!simulation_finished(philo->table))
 	{
-		if (get_bool(philo, philo->full))
+		if (philo->full)
 			break;
 		eating(philo);
 		write_status(SLEEPING, philo, DEBUG_MODE);

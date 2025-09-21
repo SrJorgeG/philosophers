@@ -6,7 +6,7 @@
 /*   By: jgomez-d <jgomez-d@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 14:07:00 by jgomez-d          #+#    #+#             */
-/*   Updated: 2025/07/22 14:17:23 by jgomez-d         ###   ########.fr       */
+/*   Updated: 2025/09/13 21:41:11 by jgomez-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ long	get_long(t_mtx *mtx, long *value)
 	return (ret);
 }
 
-inline bool	simulation_finished(t_table *table)
+bool	simulation_finished(t_table *table)
 {
 	return (get_bool(&table->table_mutex, &table->end_simulation));
 }

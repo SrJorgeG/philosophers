@@ -6,7 +6,7 @@
 /*   By: jgomez-d <jgomez-d@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 15:35:57 by jgomez-d          #+#    #+#             */
-/*   Updated: 2025/06/07 16:20:16 by jgomez-d         ###   ########.fr       */
+/*   Updated: 2025/09/13 21:47:34 by jgomez-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static	inline bool is_digit(char c)
 {
-	return ((c >= '0' && c <= '9'));
+	return (c >= '0' && c <= '9');
 }
 
 static	inline bool is_space(char c)
@@ -34,7 +34,7 @@ static const char *valid_input(const char *str)
 		error_exit("WRONG INPUT: CAN'T TAKE NEGATIVES");
 	if(*str == '+')
 		++str;
-	if (!is_digit)
+	if (!is_digit(*str))
 		error_exit("WRONG INPUT: NOT A CORRECT NUMBER");
 	number = str;
 	while (is_digit(*str++))

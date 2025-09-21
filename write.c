@@ -6,7 +6,7 @@
 /*   By: jgomez-d <jgomez-d@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 00:28:35 by jgomez-d          #+#    #+#             */
-/*   Updated: 2025/08/05 01:01:47 by jgomez-d         ###   ########.fr       */
+/*   Updated: 2025/09/13 21:42:56 by jgomez-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static void	write_status_debug(t_philo_status status, t_philo *philo, long elaps
 		printf(WHITE"%-6ld"RESET" PHILO:[%d] has taken the 2nd FORK:[%d]\n", elapsed, philo->id,
 			philo->second_fork->fork_id);
 	else if (status == EATING && !simulation_finished(philo->table))
-		printf(WHITE"%-6ld"RESET" PHILO:[%d] is eating, MEALS:[%d]\n", elapsed, philo->id,
+		printf(WHITE"%-6ld"RESET" PHILO:[%d] is eating, MEALS:[%ld]\n", elapsed, philo->id,
 			philo->meals_counter);
 	else if (status == SLEEPING && !simulation_finished(philo->table))
 		printf(WHITE"%-6ld"RESET" PHILO:[%d] is sleeping\n", elapsed, philo->id);
