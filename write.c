@@ -6,7 +6,7 @@
 /*   By: jgomez-d <jgomez-d@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 00:28:35 by jgomez-d          #+#    #+#             */
-/*   Updated: 2025/09/13 21:42:56 by jgomez-d         ###   ########.fr       */
+/*   Updated: 2025/09/21 15:10:58 by jgomez-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static void	write_status_debug(t_philo_status status, t_philo *philo, long elapsed)
 {
 	if (status == TAKE_FIRST_FORK && !simulation_finished(philo->table))
-		printf(WHITE"%-6ld"RESET" %d has taken the 1st FORK:[%d]\n", elapsed, philo->id,
+		printf(WHITE"%-6ld"RESET" PHILO:[%d] has taken the 1st FORK:[%d]\n", elapsed, philo->id,
 			philo->first_fork->fork_id);
 	else if (status == TAKE_SECOND_FORK && !simulation_finished(philo->table))
 		printf(WHITE"%-6ld"RESET" PHILO:[%d] has taken the 2nd FORK:[%d]\n", elapsed, philo->id,

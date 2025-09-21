@@ -6,7 +6,7 @@
 /*   By: jgomez-d <jgomez-d@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 15:35:57 by jgomez-d          #+#    #+#             */
-/*   Updated: 2025/09/13 21:47:34 by jgomez-d         ###   ########.fr       */
+/*   Updated: 2025/09/21 15:05:55 by jgomez-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ static const char *valid_input(const char *str)
 	const char	*number;
 
 	len = 0;
+	if (!str)
+		error_exit("WRONG INPUT: NO INPUT");	
 	while (is_space(*str))
 		++str;
 	if(*str == '-')
@@ -60,9 +62,9 @@ static long	ft_atol(const char *str)
 void	parse_input(t_table *table, char **av)
 {
 	table->philo_num = ft_atol(av[1]);
-	table->time_to_die = ft_atol(av[2]) * 1000;
-	table->time_to_eat = ft_atol(av[3]) * 1000;
-	table->time_to_slp = ft_atol(av[4]) * 1000;
+	table->time_to_die = ft_atol(av[2]) * 1e3;
+	table->time_to_eat = ft_atol(av[3]) * 1e3;
+	table->time_to_slp = ft_atol(av[4]) * 1e3;
 	if (table->time_to_die < 6e4
 		|| table->time_to_eat < 6e4
 		|| table->time_to_slp < 6e4)

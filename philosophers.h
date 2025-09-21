@@ -6,7 +6,7 @@
 /*   By: jgomez-d <jgomez-d@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 14:47:56 by jgomez-d          #+#    #+#             */
-/*   Updated: 2025/09/13 21:41:19 by jgomez-d         ###   ########.fr       */
+/*   Updated: 2025/09/21 15:10:05 by jgomez-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@
 
  // DEBUG MODE
 
- #define DEBUG_MODE 0
+ #define DEBUG_MODE 1
  
  // THREAD STATES
 

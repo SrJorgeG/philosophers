@@ -6,7 +6,7 @@
 /*   By: jgomez-d <jgomez-d@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 19:58:12 by jgomez-d          #+#    #+#             */
-/*   Updated: 2025/08/11 16:49:56 by jgomez-d         ###   ########.fr       */
+/*   Updated: 2025/09/21 15:21:25 by jgomez-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static void assign_forks(t_philo *philo, t_fork *forks, int philo_position)
 {
 	int	philo_num;
 	
-	philo_num = philo->table->philo_num;
+	philo_num = (int)philo->table->philo_num;
 	if (!(philo->id % 2))
 	{
 		philo->first_fork = &forks[philo_position];
