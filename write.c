@@ -6,7 +6,7 @@
 /*   By: jgomez-d <jgomez-d@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 00:28:35 by jgomez-d          #+#    #+#             */
-/*   Updated: 2025/09/22 12:45:59 by jgomez-d         ###   ########.fr       */
+/*   Updated: 2025/09/22 13:46:12 by jgomez-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,8 @@ void	write_status(t_philo_status status, t_philo *philo, bool debug)
 {
 	long	elapsed;
 	
-	elapsed = get_time(MILISECOND) - philo->table->start_simulation;
 	safe_mutex_handle(&philo->table->write_mutex, LOCK);
+	elapsed = get_time(MILISECOND) - philo->table->start_simulation;
 	if (debug)
 		write_status_debug(status, philo, elapsed);	
 	else

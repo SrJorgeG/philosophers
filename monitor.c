@@ -6,7 +6,7 @@
 /*   By: jgomez-d <jgomez-d@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/10 18:03:20 by jgomez-d          #+#    #+#             */
-/*   Updated: 2025/09/22 11:57:43 by jgomez-d         ###   ########.fr       */
+/*   Updated: 2025/09/22 16:29:11 by jgomez-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static bool	philo_died(t_philo *philo)
 	if (get_bool(&philo->philo_mutex, &philo->full))
 		return (false);	
 	elapsed = get_time(MILISECOND) - get_long(&philo->philo_mutex, &philo->last_meal_time);
-	t_to_die = philo->table->time_to_die / 1e3;
+	t_to_die = get_long(&philo->philo_mutex, &philo->table->time_to_die) / 1e3;
 	if (elapsed > t_to_die)
 		return (true);
 	return (false);

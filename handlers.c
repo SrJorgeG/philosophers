@@ -6,7 +6,7 @@
 /*   By: jgomez-d <jgomez-d@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 19:59:54 by jgomez-d          #+#    #+#             */
-/*   Updated: 2025/09/22 11:47:07 by jgomez-d         ###   ########.fr       */
+/*   Updated: 2025/09/22 13:39:38 by jgomez-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,12 @@ static void handle_mutex_error(int status, t_opcode opcode)
 		error_exit("The process cannot allocate enough memory to create another mutex");
 	if (status == EBUSY)
 		error_exit("Mutex is locked");
+	if (status == EAGAIN)
+        error_exit("The system lacked the necessary resources (other than memory) to initialize another mutex");
+	if (status == ENOTRECOVERABLE)
+        error_exit("The state protected by the mutex is not recoverable.	");
+	if (status == EOWNERDEAD)
+		error_exit("The previous owner of this mutex died while holding the mutex");
 }
 
 void	safe_mutex_handle(t_mtx *mutex, t_opcode opcode)
@@ -49,7 +55,7 @@ static void handle_thread_error(int status, t_opcode opcode)
 	if (!status)
 		return ;
 	if (status == EAGAIN)
-		error_exit("No resources to create another thread");
+		error_exit("Insufficient resources to create another thread");
 	if (status == EPERM)
 		error_exit("The caller does not have appropriate permission\n");
 	if (status == EINVAL && opcode == CREATE)
@@ -58,7 +64,7 @@ static void handle_thread_error(int status, t_opcode opcode)
 		error_exit("The value specified by thread is not joinable\n");
 	if (status == ESRCH)
 		error_exit("No thread could be found corresponding to that"
-					"specified by the given thread ID, thread.");
+					"specified by the given thread ID.");
 	if (status == EDEADLK)
 		error_exit("A deadlock was detected or the value of"
 					"thread specifies the calling thread.");
