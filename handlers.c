@@ -6,7 +6,7 @@
 /*   By: jgomez-d <jgomez-d@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 19:59:54 by jgomez-d          #+#    #+#             */
-/*   Updated: 2025/09/22 13:39:38 by jgomez-d         ###   ########.fr       */
+/*   Updated: 2025/09/22 17:23:00 by jgomez-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,16 +38,19 @@ static void handle_mutex_error(int status, t_opcode opcode)
 
 void	safe_mutex_handle(t_mtx *mutex, t_opcode opcode)
 {
+	int status = 0;
+	
 	if (opcode == LOCK)
-		handle_mutex_error(pthread_mutex_lock(mutex), opcode);
+		status = pthread_mutex_lock(mutex);
 	else if (opcode == UNLOCK)
-		handle_mutex_error(pthread_mutex_unlock(mutex), opcode);
+		status = pthread_mutex_unlock(mutex);
 	else if (opcode == INIT)
-		handle_mutex_error(pthread_mutex_init(mutex, NULL), opcode);
+		status = pthread_mutex_init(mutex, NULL);
 	else if (opcode == DESTROY)
-		handle_mutex_error(pthread_mutex_destroy(mutex), opcode);
+		status = pthread_mutex_destroy(mutex);
 	else 
 		error_exit("WRONG OPCODE FOR MUTEX HANDLE");
+	handle_mutex_error(status, opcode);
 }
 
 static void handle_thread_error(int status, t_opcode opcode)

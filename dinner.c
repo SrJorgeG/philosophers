@@ -6,7 +6,7 @@
 /*   By: jgomez-d <jgomez-d@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 13:19:42 by jgomez-d          #+#    #+#             */
-/*   Updated: 2025/09/22 16:22:02 by jgomez-d         ###   ########.fr       */
+/*   Updated: 2025/09/22 17:26:03 by jgomez-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,8 +83,11 @@ void	dinner_start(t_table *table)
 		safe_thread_handle(&table->philos[0].thread_id, lone_philo, &table->philos[0], CREATE);
 	else
 		while (++i < table->philo_num)
+		{
 			safe_thread_handle(&table->philos[i].thread_id, dinner_simulation,
 				&table->philos[i], CREATE);
+			increase_long(&table->table_mutex, &table->threads_running_nbr);
+		}
 	safe_thread_handle(&table->monitor, monitor_dinner, table, CREATE);
 	set_bool(&table->table_mutex, &table->all_threads_ready, true);
 	i = -1;

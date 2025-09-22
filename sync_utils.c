@@ -6,7 +6,7 @@
 /*   By: jgomez-d <jgomez-d@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 14:45:01 by jgomez-d          #+#    #+#             */
-/*   Updated: 2025/09/22 15:49:47 by jgomez-d         ###   ########.fr       */
+/*   Updated: 2025/09/22 17:21:27 by jgomez-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 void	wait_all_threads(t_table *table)
 {
-	while (!get_bool(&table->table_mutex, &table->all_threads_ready))
+	while (!all_threads_running(&table->table_mutex,
+			&table->threads_running_nbr, table->philo_num))
 		;
 }
 
