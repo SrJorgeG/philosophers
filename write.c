@@ -6,7 +6,7 @@
 /*   By: jgomez-d <jgomez-d@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 00:28:35 by jgomez-d          #+#    #+#             */
-/*   Updated: 2025/09/21 15:10:58 by jgomez-d         ###   ########.fr       */
+/*   Updated: 2025/09/22 12:45:59 by jgomez-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,20 +15,20 @@
 static void	write_status_debug(t_philo_status status, t_philo *philo, long elapsed)
 {
 	if (status == TAKE_FIRST_FORK && !simulation_finished(philo->table))
-		printf(WHITE"%-6ld"RESET" PHILO:[%d] has taken the 1st FORK:[%d]\n", elapsed, philo->id,
+		printf(WHITE"%-6ld"RESET YELLOW" PHILO:[%d] has taken the 1st FORK:[%d]\n", elapsed, philo->id,
 			philo->first_fork->fork_id);
 	else if (status == TAKE_SECOND_FORK && !simulation_finished(philo->table))
-		printf(WHITE"%-6ld"RESET" PHILO:[%d] has taken the 2nd FORK:[%d]\n", elapsed, philo->id,
+		printf(WHITE"%-6ld"RESET MAGENTA" PHILO:[%d] has taken the 2nd FORK:[%d]\n", elapsed, philo->id,
 			philo->second_fork->fork_id);
 	else if (status == EATING && !simulation_finished(philo->table))
-		printf(WHITE"%-6ld"RESET" PHILO:[%d] is eating, MEALS:[%ld]\n", elapsed, philo->id,
+		printf(WHITE"%-6ld"RESET GREEN" PHILO:[%d] is eating, MEALS:[%ld]\n", elapsed, philo->id,
 			philo->meals_counter);
 	else if (status == SLEEPING && !simulation_finished(philo->table))
-		printf(WHITE"%-6ld"RESET" PHILO:[%d] is sleeping\n", elapsed, philo->id);
+		printf(WHITE"%-6ld"RESET BLUE" PHILO:[%d] is sleeping\n", elapsed, philo->id);
 	else if (status == THINKING && !simulation_finished(philo->table))
-		printf(WHITE"%-6ld"RESET" PHILO:[%d] is thinking\n", elapsed, philo->id);
+		printf(WHITE"%-6ld"RESET  CYAN" PHILO:[%d] is thinking\n", elapsed, philo->id);
 	else if (status == DIED)
-		printf(WHITE"%-6ld"RESET" PHILO:[%d] died\n", elapsed, philo->id);
+		printf(WHITE"%-6ld"RESET RED" PHILO:[%d] died\n", elapsed, philo->id);
 }
 
 void	write_status(t_philo_status status, t_philo *philo, bool debug)

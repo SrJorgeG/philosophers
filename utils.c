@@ -6,7 +6,7 @@
 /*   By: jgomez-d <jgomez-d@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 15:17:38 by jgomez-d          #+#    #+#             */
-/*   Updated: 2025/09/13 22:29:31 by jgomez-d         ###   ########.fr       */
+/*   Updated: 2025/09/22 11:50:03 by jgomez-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,10 @@ void	clean(t_table *table)
 	}
 	safe_mutex_handle(&table->write_mutex, DESTROY);
 	safe_mutex_handle(&table->table_mutex, DESTROY);
+	if (table->philos)
+		free(table->philos);
+	if (table->forks)
+		free(table->forks);
 }
 
 void	error_exit(const char *error)

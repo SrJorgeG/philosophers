@@ -6,21 +6,11 @@
 /*   By: jgomez-d <jgomez-d@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 19:59:54 by jgomez-d          #+#    #+#             */
-/*   Updated: 2025/07/22 15:30:23 by jgomez-d         ###   ########.fr       */
+/*   Updated: 2025/09/22 11:47:07 by jgomez-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
-
-void	*ft_safe_malloc(size_t bytes)
-{
-	void	*ret;
-		
-	ret = malloc(bytes);
-	if (!ret)
-		error_exit("Error with malloc");
-	return (ret);
-}
 
 static void handle_mutex_error(int status, t_opcode opcode)
 {

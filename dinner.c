@@ -6,7 +6,7 @@
 /*   By: jgomez-d <jgomez-d@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 13:19:42 by jgomez-d          #+#    #+#             */
-/*   Updated: 2025/09/13 21:36:27 by jgomez-d         ###   ########.fr       */
+/*   Updated: 2025/09/22 12:28:44 by jgomez-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ void	*dinner_simulation(void *data)
 		eating(philo);
 		write_status(SLEEPING, philo, DEBUG_MODE);
 		precise_usleep(philo->table, philo->table->time_to_slp);
+		thinking(philo);
 	}
 	return (NULL);
 }
@@ -74,13 +75,13 @@ void	dinner_start(t_table *table)
 	i = -1;
 	if (!table->limit_meals)
 		return ;
-	else if (table->limit_meals == 1)
+	else if (table->philo_num == 1)
 		safe_thread_handle(&table->philos[0].thread_id, lone_philo, &table->philos[0], CREATE); //TODO
 	else
 		while (++i < table->philo_num)
 			safe_thread_handle(&table->philos[i].thread_id, dinner_simulation,
 				&table->philos[i], CREATE);
-	safe_thread_handle(&table->monitor, monitor_dinner, table, CREATE); //TODO
+	safe_thread_handle(&table->monitor, monitor_dinner, table, CREATE);
 	table->start_simulation = get_time(MILISECOND);
 	set_bool(&table->table_mutex, &table->all_threads_ready, true);
 	i = -1;
@@ -88,5 +89,4 @@ void	dinner_start(t_table *table)
 		safe_thread_handle(&table->philos[i].thread_id, NULL, NULL, JOIN);
 	set_bool(&table->table_mutex, &table->end_simulation, true);
 	safe_thread_handle(&table->monitor, NULL, NULL, JOIN);
-
 }

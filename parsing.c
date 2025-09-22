@@ -6,7 +6,7 @@
 /*   By: jgomez-d <jgomez-d@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 15:35:57 by jgomez-d          #+#    #+#             */
-/*   Updated: 2025/09/21 15:05:55 by jgomez-d         ###   ########.fr       */
+/*   Updated: 2025/09/22 12:25:34 by jgomez-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static const char *valid_input(const char *str)
 
 	len = 0;
 	if (!str)
-		error_exit("WRONG INPUT: NO INPUT");	
+		return (NULL);	
 	while (is_space(*str))
 		++str;
 	if(*str == '-')
@@ -52,6 +52,8 @@ static long	ft_atol(const char *str)
 
 	num = 0;
 	str = valid_input(str);
+	if (!str)
+		return (0);
 	while (is_digit(*str))
 		num = (num * 10) + (*str++ - 48);
 	if (num > INT_MAX)
@@ -69,7 +71,8 @@ void	parse_input(t_table *table, char **av)
 		|| table->time_to_eat < 6e4
 		|| table->time_to_slp < 6e4)
 		error_exit("WRONG INPUT: USE TIMESTAMPS MAJOR THAN 60ms");
-	if (!av[5])
+	if (av[5])
+		table->limit_meals = ft_atol(av[5]);
+	else
 		table->limit_meals = -1;
-	table->limit_meals = ft_atol(av[5]);
 }

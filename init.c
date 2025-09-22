@@ -6,7 +6,7 @@
 /*   By: jgomez-d <jgomez-d@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 19:58:12 by jgomez-d          #+#    #+#             */
-/*   Updated: 2025/09/21 15:21:25 by jgomez-d         ###   ########.fr       */
+/*   Updated: 2025/09/22 11:47:45 by jgomez-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,10 +54,18 @@ void	data_init(t_table *table)
 	table->end_simulation = false;
 	table->all_threads_ready = false;
 	table->threads_running_nbr = 0;
-	table->philos = ft_safe_malloc(sizeof(t_philo) * table->philo_num);
+	table->philos = malloc(sizeof(t_philo) * table->philo_num);
+	if (!table->philos)
+		error_exit("Error with malloc");
 	safe_mutex_handle(&table->table_mutex, INIT);
 	safe_mutex_handle(&table->write_mutex, INIT);
-	table->forks = ft_safe_malloc(sizeof(t_fork) * table->philo_num);
+	table->forks = malloc(sizeof(t_fork) * table->philo_num);
+	if (!table->forks)
+	{
+		free(table->philos);
+		clean(table);
+		error_exit("Error with malloc");
+	} 
 	while (++i < table->philo_num)
 	{
 		safe_mutex_handle(&table->forks[i].fork, INIT);
