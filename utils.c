@@ -6,11 +6,18 @@
 /*   By: jgomez-d <jgomez-d@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 15:17:38 by jgomez-d          #+#    #+#             */
-/*   Updated: 2025/09/22 11:50:03 by jgomez-d         ###   ########.fr       */
+/*   Updated: 2025/09/23 19:11:56 by jgomez-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
+
+void	increase_long(t_mtx *mutex, long *value)
+{
+	safe_mutex_handle(mutex, LOCK);
+	(*value)++;
+	safe_mutex_handle(mutex, UNLOCK);
+}
 
 long	get_time(t_time_code timecode)
 {

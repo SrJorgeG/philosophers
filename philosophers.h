@@ -6,7 +6,7 @@
 /*   By: jgomez-d <jgomez-d@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 14:47:56 by jgomez-d          #+#    #+#             */
-/*   Updated: 2025/09/22 12:29:50 by jgomez-d         ###   ########.fr       */
+/*   Updated: 2025/09/23 19:11:11 by jgomez-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,7 +137,6 @@
 
  // HANDLERS
  
- void	*ft_safe_malloc(size_t bytes, t_table *table);
  void	safe_mutex_handle(t_mtx *mutex, t_opcode opcode);
  void	safe_thread_handle(pthread_t *thread, void *(*foo)(void *), 
  void	*data,t_opcode opcode);

@@ -6,7 +6,7 @@
 /*   By: jgomez-d <jgomez-d@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 13:19:42 by jgomez-d          #+#    #+#             */
-/*   Updated: 2025/09/22 17:26:03 by jgomez-d         ###   ########.fr       */
+/*   Updated: 2025/09/23 19:23:34 by jgomez-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,9 @@ void	*lone_philo(void *arg)
 	t_philo	*philo;
 	
 	philo = (t_philo *)arg;
-	wait_all_threads(philo->table);
+	write_status(TAKE_FIRST_FORK, philo, DEBUG_MODE);
 	set_long(&philo->philo_mutex, &philo->last_meal_time, get_time(MILISECOND));
 	increase_long(&philo->table->table_mutex, &philo->table->threads_running_nbr);
-	write_status(TAKE_FIRST_FORK, philo, DEBUG_MODE);
 	while (!simulation_finished(philo->table))
 		precise_usleep(philo->table, 200);
 	return (NULL);	
@@ -33,14 +32,13 @@ void	*lone_philo(void *arg)
 
 static void eating(t_philo *philo)
 {
-
 	safe_mutex_handle(&philo->first_fork->fork, LOCK);
 	write_status(TAKE_FIRST_FORK, philo, DEBUG_MODE);
 	safe_mutex_handle(&philo->second_fork->fork, LOCK);
 	write_status(TAKE_SECOND_FORK, philo, DEBUG_MODE);
+	write_status(EATING, philo, DEBUG_MODE);
 	set_long(&philo->philo_mutex, &philo->last_meal_time, get_time(MILISECOND));
 	philo->meals_counter++;
-	write_status(EATING, philo, DEBUG_MODE);
 	precise_usleep(philo->table, philo->table->time_to_eat);
 	if (philo->table->limit_meals > 0
 		&& philo->meals_counter == philo->table->limit_meals)
@@ -54,13 +52,14 @@ void	*dinner_simulation(void *data)
 	t_philo	*philo;
 	
 	philo = (t_philo *)data;
-	wait_all_threads(philo->table);
 	set_long(&philo->philo_mutex, &philo->last_meal_time, get_time(MILISECOND));
 	increase_long(&philo->table->table_mutex, &philo->table->threads_running_nbr);
 	while (!simulation_finished(philo->table))
 	{
 		if (get_bool(&philo->philo_mutex, &philo->full))
 			break;
+		if (philo->id % 2 == 0)
+			precise_usleep(philo->table, 1000);
 		eating(philo);
 		write_status(SLEEPING, philo, DEBUG_MODE);
 		precise_usleep(philo->table, philo->table->time_to_slp);
