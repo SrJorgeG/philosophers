@@ -6,7 +6,7 @@
 /*   By: jgomez-d <jgomez-d@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 13:19:42 by jgomez-d          #+#    #+#             */
-/*   Updated: 2025/09/23 19:23:34 by jgomez-d         ###   ########.fr       */
+/*   Updated: 2025/09/23 23:31:30 by jgomez-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 inline static void	thinking(t_philo *philo)
 {
+	if (simulation_finished(philo->table))
+		return;
 	write_status(THINKING, philo, DEBUG_MODE);
 }
 
@@ -22,8 +24,8 @@ void	*lone_philo(void *arg)
 	t_philo	*philo;
 	
 	philo = (t_philo *)arg;
-	write_status(TAKE_FIRST_FORK, philo, DEBUG_MODE);
 	set_long(&philo->philo_mutex, &philo->last_meal_time, get_time(MILISECOND));
+	write_status(TAKE_FIRST_FORK, philo, DEBUG_MODE);
 	increase_long(&philo->table->table_mutex, &philo->table->threads_running_nbr);
 	while (!simulation_finished(philo->table))
 		precise_usleep(philo->table, 200);
@@ -32,17 +34,24 @@ void	*lone_philo(void *arg)
 
 static void eating(t_philo *philo)
 {
+
 	safe_mutex_handle(&philo->first_fork->fork, LOCK);
+	if (simulation_finished(philo->table))
+		return;
 	write_status(TAKE_FIRST_FORK, philo, DEBUG_MODE);
 	safe_mutex_handle(&philo->second_fork->fork, LOCK);
+	if (simulation_finished(philo->table))
+		return;
 	write_status(TAKE_SECOND_FORK, philo, DEBUG_MODE);
-	write_status(EATING, philo, DEBUG_MODE);
 	set_long(&philo->philo_mutex, &philo->last_meal_time, get_time(MILISECOND));
-	philo->meals_counter++;
+	if (simulation_finished(philo->table))
+		return;
+	write_status(EATING, philo, DEBUG_MODE);
 	precise_usleep(philo->table, philo->table->time_to_eat);
+	philo->meals_counter++;
 	if (philo->table->limit_meals > 0
 		&& philo->meals_counter == philo->table->limit_meals)
-		set_bool(&philo->philo_mutex, &philo->full, true);
+		(set_bool(&philo->philo_mutex, &philo->full, true));
 	safe_mutex_handle(&philo->first_fork->fork, UNLOCK);
 	safe_mutex_handle(&philo->second_fork->fork, UNLOCK);
 }
@@ -56,13 +65,17 @@ void	*dinner_simulation(void *data)
 	increase_long(&philo->table->table_mutex, &philo->table->threads_running_nbr);
 	while (!simulation_finished(philo->table))
 	{
-		if (get_bool(&philo->philo_mutex, &philo->full))
+		if (simulation_finished(philo->table))
 			break;
 		if (philo->id % 2 == 0)
 			precise_usleep(philo->table, 1000);
 		eating(philo);
+		if (get_bool(&philo->philo_mutex, &philo->full) || simulation_finished(philo->table))
+			break;
 		write_status(SLEEPING, philo, DEBUG_MODE);
 		precise_usleep(philo->table, philo->table->time_to_slp);
+		if (simulation_finished(philo->table))
+			break;
 		thinking(philo);
 	}
 	return (NULL);
@@ -92,6 +105,6 @@ void	dinner_start(t_table *table)
 	i = -1;
 	while (++i < table->philo_num)
 		safe_thread_handle(&table->philos[i].thread_id, NULL, NULL, JOIN);
-	set_bool(&table->table_mutex, &table->end_simulation, true);
+	//set_bool(&table->table_mutex, &table->end_simulation, true);
 	safe_thread_handle(&table->monitor, NULL, NULL, JOIN);
 }
