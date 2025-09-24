@@ -6,7 +6,7 @@
 /*   By: jgomez-d <jgomez-d@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/10 18:03:20 by jgomez-d          #+#    #+#             */
-/*   Updated: 2025/09/23 23:23:08 by jgomez-d         ###   ########.fr       */
+/*   Updated: 2025/09/24 02:42:28 by jgomez-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,12 +38,14 @@ void	*monitor_dinner(void *data)
 		i = -1;
 		all_full = 0;
 		while (++i < table->philo_num && !simulation_finished(table))
+		{
 			if (philo_died(table->philos + i))
 			{
 				set_bool(&table->table_mutex, &table->end_simulation, true);
 				write_status(DIED, table->philos + i, DEBUG_MODE);
 			} else if (get_bool(&table->philos[i].philo_mutex, &table->philos[i].full))
 				all_full++;
+		}
 		if (all_full == table->philo_num)
 			(printf("All end/n\n") , set_bool(&table->table_mutex, &table->end_simulation, true));
 		usleep(100);

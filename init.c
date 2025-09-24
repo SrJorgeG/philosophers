@@ -6,7 +6,7 @@
 /*   By: jgomez-d <jgomez-d@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 19:58:12 by jgomez-d          #+#    #+#             */
-/*   Updated: 2025/09/22 11:47:45 by jgomez-d         ###   ########.fr       */
+/*   Updated: 2025/09/24 02:47:38 by jgomez-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static void assign_forks(t_philo *philo, t_fork *forks, int philo_position)
 	}
 }
 
-static void	philo_init(t_table *table)
+static void	philo_init(t_table *table, long long start_time)
 {
 	int		i;
 	t_philo	*philo;
@@ -41,6 +41,7 @@ static void	philo_init(t_table *table)
 		philo->full = false;
 		philo->meals_counter = 0;
 		philo->table = table;
+		philo->last_meal_time = start_time;
 		safe_mutex_handle(&philo->philo_mutex, INIT);
 		assign_forks(philo, table->forks, i);
 	}
@@ -71,5 +72,5 @@ void	data_init(t_table *table)
 		safe_mutex_handle(&table->forks[i].fork, INIT);
 		table->forks[i].fork_id = i;
 	}
-	philo_init(table);
+	philo_init(table, get_time(MILISECOND));
 }
